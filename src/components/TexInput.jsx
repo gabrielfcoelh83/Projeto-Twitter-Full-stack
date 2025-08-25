@@ -1,7 +1,8 @@
-export default function TexInput() {
+export default function TexInput({placeholder, maxLength, ...props}) {
   return (
     <div> 
-      <textarea />
+      <textarea placeholder={placeholder} maxLength={maxLength} {...props} />
     </div>
-  )
+  );
 }
+
