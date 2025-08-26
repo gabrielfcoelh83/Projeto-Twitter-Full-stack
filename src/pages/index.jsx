@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import gabrielImg from '../assets/gabriel.png';
 import TexInput from '../components/TexInput.jsx';
 import Tweet from '../components/Tweet.jsx';
@@ -5,6 +6,7 @@ import style from './index.module.css';
 import { useIndex } from '../hooks/userIndex.page.js';
 
 export default function Index() {
+  const [theme, setTheme] = useState('light');
   const {
     text, 
     maxLength, 
@@ -13,8 +15,19 @@ export default function Index() {
     sendTweet
     } = useIndex();
 
+  function toggleTheme() {
+    setTheme(theme === 'light' ? 'dark' : 'light');
+    document.documentElement.setAttribute('data-theme', theme === 'light' ? 'dark' : 'light');
+  }
+
   return (
     <div>
+      <button
+      className={style.postButton}
+      onClick={toggleTheme} 
+      style={{marginBottom: 16}}>
+        Mudar tema
+      </button>
       <h1>Treina Twitter</h1>
       <hr className={style.divider} />
       <div className={style.topTweetContainer}>
