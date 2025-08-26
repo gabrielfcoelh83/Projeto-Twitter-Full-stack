@@ -1,18 +1,18 @@
 import gabrielImg from '../assets/gabriel.png';
 import style from './Tweet.module.css';
 
-export default function Tweet(props) {
+export default function Tweet({tweet}) {
     return (
-            <div className={style.tweetContainer}>
-            <img className={style.avatar} src={gabrielImg} alt="Gabriel" />
+        <div className={style.tweetContainer}>
+            <img className={style.avatar} src={tweet.user.image} alt="Gabriel" />
             <div className={style.user}>
-                <span className={style.userName}>Gabriel Coelho</span>
-                <span className={style.userUserName}>@gabrielcoelho</span>
-                <span className={style.date}>Há 12 horas</span>
+                <span className={style.userName}>{tweet.user.name}</span>
+                <span className={style.userUserName}>{tweet.user.username}</span>
+                <span className={style.date}>{tweet.date}</span>
             </div>
             <div className={style.tweetText}>
-                {props.children}
-                </div>
-          </div>
+                {tweet.text}
+            </div>
+        </div>
     )
 }

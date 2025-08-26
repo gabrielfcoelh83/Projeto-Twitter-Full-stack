@@ -9,6 +9,16 @@ export default function Index() {
   const maxLength = 125;
   const [tweetList, setTweetList] = useState([]);
 
+  const tweet = {
+    date: new Date().toDateString(),
+    text: text,
+    user: {
+      name: "Gabriel",
+      image: gabrielImg,
+      username: "gabrielcoelho"
+    }
+  }
+
    function onTextChange(event) {
     const newText = event.target.value;
     if (newText.length <= maxLength) {
@@ -18,7 +28,7 @@ export default function Index() {
 
   function sendTweet(event) {
     event.preventDefault();
-    setTweetList([...tweetList, text]);
+    setTweetList([...tweetList, tweet]);
   }
 
   return (
@@ -40,7 +50,7 @@ export default function Index() {
         {tweetList.map(tweet => {
         return (
           <li className={style.tweetListItem}>
-            <Tweet children={tweet}/>
+            <Tweet tweet={tweet}/>
             </li>
         )
         })}
