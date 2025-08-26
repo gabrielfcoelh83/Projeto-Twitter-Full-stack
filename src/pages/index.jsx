@@ -2,7 +2,7 @@ import gabrielImg from '../assets/gabriel.png';
 import TexInput from '../components/TexInput.jsx';
 import { useState } from 'react';
 import Tweet from '../components/Tweet.jsx';
-import style from '../components/Tweet.module.css';
+import style from './index.module.css';
 
 export default function Index() {
   const [text, setText] = useState("");
@@ -36,10 +36,12 @@ export default function Index() {
         <div>{text.length} / {maxLength}</div>
         <button onClick={sendTweet}>Tweetar</button>
       </div>
-      <ul>
+      <ul className={style.tweetList}>
         {tweetList.map(tweet => {
         return (
-          <li><Tweet children={tweet}/></li>
+          <li className={style.tweetListItem}>
+            <Tweet children={tweet}/>
+            </li>
         )
         })}
       </ul>

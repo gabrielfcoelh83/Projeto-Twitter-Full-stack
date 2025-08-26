@@ -25,6 +25,7 @@
 
 .userUsername, .date {
     color: var(--secondary-text);
+    padding-left: 5px;
 }
 
 .tweetText {
