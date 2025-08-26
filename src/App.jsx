@@ -1,10 +1,10 @@
-import TexInput from "./components/TexInput.jsx";
 import styles from './App.module.css';
+import Index from "./pages/index.jsx";
   
   function App() { 
     return (
       <div className={styles.appContainer}>
-        <TexInput placeholder={"O que está acontecendo"} maxLength={125} />
+        <Index />
       </div>
     )
   }
