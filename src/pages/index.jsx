@@ -2,6 +2,7 @@ import gabrielImg from '../assets/gabriel.png';
 import TexInput from '../components/TexInput.jsx';
 import { useState } from 'react';
 import Tweet from '../components/Tweet.jsx';
+import style from '../components/Tweet.module.css';
 
 export default function Index() {
   const [text, setText] = useState("");
@@ -24,7 +25,7 @@ export default function Index() {
     <div>
       <h1>Treina Twitter</h1>
       <div> 
-        <img src={gabrielImg} alt="Gabriel" />
+        <img className={style.avatar} src={gabrielImg} alt="Gabriel" />
         <TexInput placeholder={"O que está acontecendo?"} 
         maxLength={125} 
         onChange={onTextChange} 
