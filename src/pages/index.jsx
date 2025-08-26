@@ -1,6 +1,7 @@
 import gabrielImg from '../assets/gabriel.png';
 import TexInput from '../components/TexInput.jsx';
 import { useState } from 'react';
+import Tweet from '../components/Tweet.jsx';
 
 export default function Index() {
   const [text, setText] = useState("");
@@ -36,7 +37,9 @@ export default function Index() {
       </div>
       <ul>
         {tweetList.map(tweet => {
-        return <li>{tweet}</li>
+        return (
+          <li><Tweet children={tweet}/></li>
+        )
         })}
       </ul>
     </div>
