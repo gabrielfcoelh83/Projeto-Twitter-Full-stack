@@ -1,12 +1,10 @@
-  import TextInput from "./components/TexInput.jsx"
+import TexInput from "./components/TexInput.jsx";
+import styles from './App.module.css';
   
   function App() { 
     return (
-      <div>
-        <TextInput placeholder={"O que está acontecendo"} maxLength={125} />
-        <TextInput placeholder={"Diga-me uma novidade"} maxLength={250}  />
-        <TextInput placeholder={"Diga-me uma novidade"} maxLength={250} value={"Qualquer coisa"} />
-      
+      <div className={styles.appContainer}>
+        <TexInput placeholder={"O que está acontecendo"} maxLength={125} />
       </div>
     )
   }
