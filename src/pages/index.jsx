@@ -5,12 +5,18 @@ import { useState } from 'react';
 export default function Index() {
   const [text, setText] = useState("");
   const maxLength = 125;
+  const [tweetList, setTweetList] = useState([]);
 
    function onTextChange(event) {
     const newText = event.target.value;
     if (newText.length <= maxLength) {
       setText(newText);
     }
+  }
+
+  function sendTweet(event) {
+    event.preventDefault();
+    setTweetList([...tweetList, text]);
   }
 
   return (
@@ -26,11 +32,12 @@ export default function Index() {
       </div>
       <div>
         <div>{text.length} / {maxLength}</div>
-        <button>Tweetar</button>
+        <button onClick={sendTweet}>Tweetar</button>
       </div>
       <ul>
-        <li>Tweet 1</li>
-        <li>Tweet 2</li>
+        {tweetList.map(tweet => {
+        return <li>{tweet}</li>
+        })}
       </ul>
     </div>
   );
