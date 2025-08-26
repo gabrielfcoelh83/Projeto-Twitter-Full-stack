@@ -59,3 +59,29 @@
 .tweetListItem:not(:last-child) {
   border-bottom: 1px solid var(--border);
 }
+
+.topTweetContainer {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  margin-bottom: 8px;
+}
+
+.inputArea {
+  width: 100%;
+}
+
+.buttonArea {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end; /* Alinha tudo à direita */
+  gap: 12px;
+  margin-top: 8px;
+  width: 100%;
+}
+
+.divider {
+  border: none;
+  border-bottom: 2px solid var(--border);
+  margin: 12px 0 24px 0;
+}
