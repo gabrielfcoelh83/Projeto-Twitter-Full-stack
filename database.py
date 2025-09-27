@@ -1,7 +1,6 @@
-from sqlalchemy import create_engine # type: ignore
+from sqlalchemy import create_engine 
 
-from sqlalchemy.orm import sessionmaker, declarative_base # type: ignore
-
+from sqlalchemy.orm import sessionmaker, declarative_base 
 SQLALCHEMY_DATABASE_URL = "sqlite:///./twitter.db"
 
 engine = create_engine(
