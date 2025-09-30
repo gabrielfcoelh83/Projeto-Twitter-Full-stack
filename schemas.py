@@ -10,3 +10,14 @@ class UserLogin(BaseModel):
 
 class TweetCreate(BaseModel):
     text: str
+    
+class ListTweets(BaseModel):
+    id: int
+    text: str
+    author_id: int
+
+    class Config:
+        orm_mode = True
+        
+class TweetUpdate(BaseModel):
+    text: str

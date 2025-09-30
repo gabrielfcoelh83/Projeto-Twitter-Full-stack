@@ -4,8 +4,9 @@ from sqlalchemy.orm import Session
 from passlib.context import CryptContext
 from database import SessionLocal, engine, Base
 from models import User, Tweet
-from schemas import UserCreate, UserLogin, TweetCreate
+from schemas import UserCreate, UserLogin, TweetCreate, ListTweets, TweetUpdate
 from jose import jwt, JWTError
+from typing import List
 
 from datetime import datetime, timedelta
 
@@ -102,3 +103,41 @@ def create_tweet(tweet: TweetCreate, current_user: User = Security(get_current_u
     db.commit()
     db.refresh(db_tweet)
     return {"message": "Tweet enviado com sucesso!"}
+
+@app.get("/tweets", response_model=List[ListTweets])
+def list_tweets(db: Session = Depends(get_db)):
+    all_tweets = db.query(Tweet).all()
+    return all_tweets
+
+@app.get("/tweets/{tweet_id}", response_model=ListTweets)
+def get_tweet(tweet_id: int, db: Session = Depends(get_db)):
+    db_tweet = db.query(Tweet).filter(Tweet.id == tweet_id).first()
+    if db_tweet is None:
+        raise HTTPException(status_code=404, detail="Tweet não encontrado")
+    return db_tweet
+
+@app.put("/tweets/{tweet_id}")
+def update_tweet(tweet_id: int, tweet_update: TweetUpdate, current_user: User = Security(get_current_user), db: Session = Depends(get_db)):
+    db_tweet = db.query(Tweet).filter(Tweet.id == tweet_id).first()
+    if db_tweet is None:
+        raise HTTPException(status_code=404, detail="Tweet não encontrado")
+    
+    if db_tweet.author_id != current_user.id:
+        raise HTTPException(status_code=403, detail="Você não tem permissão para atualizar este tweet.")
+
+    db_tweet.text = tweet_update.text
+    db.commit()
+    return {"message": "Tweet atualizado com sucesso!"}
+
+@app.delete("/tweets/{tweet_id}", status_code=status.HTTP_200_OK)
+def delete_tweet(tweet_id: int, current_user: User = Security(get_current_user), db: Session = Depends(get_db)):
+    db_tweet = db.query(Tweet).filter(Tweet.id == tweet_id).first()
+    if db_tweet is None:
+        raise HTTPException(status_code=404, detail="Tweet não encontrado")
+
+    if db_tweet.author_id != current_user.id:
+        raise HTTPException(status_code=403, detail="Você não tem permissão para excluir este tweet.")
+
+    db.delete(db_tweet)
+    db.commit()
+    return {"message": "Tweet excluído com sucesso!"}
