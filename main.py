@@ -7,6 +7,7 @@ from models import User, Tweet
 from schemas import UserCreate, UserLogin, TweetCreate, ListTweets, TweetUpdate
 from jose import jwt, JWTError
 from typing import List
+from fastapi.middleware.cors import CORSMiddleware
 
 from datetime import datetime, timedelta
 
@@ -15,6 +16,19 @@ from datetime import datetime, timedelta
 Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
+
+origins = [
+    "http://localhost:5173",  # A porta padrão do frontend Vite
+    "http://127.0.0.1:5173",  # E o endereço IP local
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 pwd_context = CryptContext(schemes=["pbkdf2_sha256"], deprecated="auto")
 SECRET_KEY = "sua_chave_secreta_aqui" # Mude isso por uma chave segura!
@@ -141,3 +155,11 @@ def delete_tweet(tweet_id: int, current_user: User = Security(get_current_user),
     db.delete(db_tweet)
     db.commit()
     return {"message": "Tweet excluído com sucesso!"}
+
+
+
+# Implementando tweets do frontend
+@app.get("/my_tweets", response_model=List[ListTweets])
+def get_user_tweets(current_user: User = Security(get_current_user), db: Session = Depends(get_db)):
+    user_tweets = db.query(Tweet).filter(Tweet.author_id == current_user.id).all()
+    return user_tweets
